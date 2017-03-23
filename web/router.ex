@@ -13,9 +13,14 @@ defmodule CatApi.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", CatApi do
-    pipe_through :browser # Use the default browser stack
+  scope "/api", CatApi do
+    pipe_through :api # Use the default browser stack
 
+    resources "/cats", CatController, except: [:new, :edit]
+  end
+
+  scope "/", CatApi do
+    pipe_through :browser
     get "/", PageController, :index
   end
 
